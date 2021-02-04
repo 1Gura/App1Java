@@ -11,6 +11,11 @@ public class SportsMen {
         this.k = k;
     }
 
+    public SportsMen() {
+
+    }
+
+
     void getSum() {
         double temp = this.n;
         double sum = 0;

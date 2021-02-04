@@ -1,53 +1,89 @@
 package com.company;
 
-import java.awt.*;
-import java.io.IOException;
+import java.io.*;
 import java.util.Date;
 import java.util.Scanner;
 
 public class App {
 
     public static Triangle inputVertex() {
-        double side1,side2,side3;
-        Scanner sc = new Scanner(System.in);
+        int side1,side2,side3;
         System.out.print("Введите 1 сторону: ");
-        side1 = sc.nextInt();
+        side1 = getNum();
         System.out.print("Введите 2 сторону: ");
-        side2 = sc.nextInt();
+        side2 = getNum();
         System.out.print("Введите 3 сторону: ");
-        side3 = sc.nextInt();
+        side3 = getNum();
 
         Triangle triangle = new Triangle(side1,side2,side3);
         return triangle;
     }
 
+    public static int[] readFromFileVertex(String path) {
+        try {
+            File file = new File(path);
+            Scanner scanner = new Scanner(file);
+            if(!file.exists()) {
+                file.createNewFile();
+                PrintWriter printWriter = new PrintWriter(file);
+                printWriter.println("3 4 5");
+                printWriter.close();
+            }
+            String string = "";
+            while (scanner.hasNextLine()) {
+                string = scanner.nextLine();
+            }
+            String[] numbersString = string.split(" ");
+            int numbers[] = new int[numbersString.length];
+            for (int i = 0; i < numbersString.length; i++) {
+                numbers[i] = Integer.parseInt(numbersString[i]);
+            }
+            return numbers;
+
+        } catch (IOException e) {
+            return new int[0];
+        }
+    }
+
+
+    static int inputKey() {
+        System.out.println("Введите 1, если хотите считывать из консоли, если хотите считывать из файла 2... ");
+        int choice = getNum();
+        return choice;
+    }
+
     static void firstTask(){
-        Triangle triangle = inputVertex();
-        triangle.out();
-        triangle.isValid();
-        triangle.area();
+        int choice = inputKey();
+        switch(choice) {
+            case 1 : {
+                Triangle triangle = inputVertex();
+                triangle.out();
+                triangle.area();
+            } break;
+            case 2 : {
+                int [] params = readFromFileVertex("../notes1.txt");
+                Triangle triangle = new Triangle(params[0],params[1],params[2]);
+                triangle.out();
+                triangle.area();
+            } break;
+        }
     }
 
     static Date inputDate() {
         Date date = new Date();
-        Scanner sc = new Scanner(System.in);
         System.out.print("Введите год: ");
-        int year = sc.nextInt();
+        int year = getNum();
         System.out.print("Введите месяц: ");
-        int month = sc.nextInt();
+        int month = getNum();
         date.setYear(year);
-        date.setMonth(month - 1);
+        date.setMonth(month);
         return date;
     }
 
-    static void secondTask(){
-        Date date =  inputDate();
-        System.out.print("Введенный год:");
-        System.out.println(date.getYear());
-        System.out.print("Введенный месяц:");
-        System.out.println(date.getMonth());
-        int month = date.getMonth();
-        int year = date.getYear();
+    
+
+    static void numberDayOfMonth(int month, int year) {
+
         switch (month) {
             case 1 : {
                 System.out.println("Январь : 31 день");
@@ -90,53 +126,111 @@ public class App {
                 System.out.println("Декабрь : 31 день");
             } break;
             default:
-                System.out.println("Все плохо...");
+                System.out.println("Введите номер месяца от 1 до 12");
         }
     }
 
+    static void secondTask(){
+        int choice = inputKey();
+        switch(choice) {
+            case 1 : {
+                Date date =  inputDate();
+                int month = date.getMonth();
+                int year = date.getYear();
+                numberDayOfMonth(month, year);
+            } break;
+            case 2 : {
+                int [] params = readFromFileVertex("../notes2.txt");
+                numberDayOfMonth(params[0], params[1]);
+            } break;
+        }
+    }
+
+
+
     static SportsMen inputSportsMen() {
-        Scanner sc = new Scanner(System.in);
         System.out.print("Введите кол-во километров пробегаемых спортсменом за день:");
-        int n  = sc.nextInt();
+        int n  = getNum();
         System.out.print("Введите процент увеличения дневной нормы:");
-        int m  = sc.nextInt();
+        int m  = getNum();
         System.out.print("Введите кол-во дней:");
-        int k  = sc.nextInt();
+        int k  = getNum();
 
         SportsMen sportsMen = new SportsMen(n,m,k);
         return sportsMen;
     }
 
     static void thirdTask() {
-        SportsMen sportsMen = inputSportsMen();
-        sportsMen.getSum();
+        int choice = inputKey();
+        switch(choice) {
+            case 1 : {
+                SportsMen sportsMen = inputSportsMen();
+                sportsMen.getSum();
+            } break;
+            case 2 : {
+                int [] params = readFromFileVertex("../notes3.txt");
+                SportsMen sportsMen = new SportsMen(params[0], params[1], params[2]);
+                sportsMen.getSum();
+            } break;
+        }
     }
 
     static  int[] arrayInitialization (int n) {
-        Scanner sc = new Scanner(System.in);
-        int nums[] = new int[n];
-        for(int i = 0; i<nums.length; i++) {
-            System.out.print("Введите " + i + " элемент: ");
-            nums[i] = getInt();
+        if(n > 0) {
+            int nums[] = new int[n];
+            for(int i = 0; i<nums.length; i++) {
+                System.out.print("Введите " + i + " элемент: ");
+                nums[i] = getNum();
+            }
+            return nums;
+        } else {
+            System.out.println("Размерность массива не может быть отрицательной!");
+            return new int[0];
         }
-        return nums;
     }
 
+
+    static void searchNumber(int[] nums, boolean flag) {
+        if(nums.length > 0) {
+            for(int i = 0; i<nums.length - 1; i++) {
+                if(nums[i] < 0 && nums[i+1] > 0) {
+                    System.out.println("Первым встречается отрицательное");
+                    flag = true;
+                    break;
+                } else if(nums[i] > 0 && nums[i+1] < 0) {
+                    System.out.println("Первым встречается положительное");
+                    flag = true;
+                    break;
+                }
+            }
+            if (flag == false) {
+                System.out.println("Массив состоит только из положительны или отрицательных чисел.");
+            }
+        }
+    }
 
     static void fourthTask() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Введите размерность массива:");
-        int n  = sc.nextInt();
-        int nums[] = arrayInitialization(n);
-        for(int i = 0; i<nums.length; i++) {
-            System.out.println(nums[i]);
+        int choice = inputKey();
+        boolean flag = false;
+        switch(choice) {
+            case 1 : {
+                System.out.print("Введите размерность массива: ");
+                int n  = getNum();
+                int nums[] = arrayInitialization(n);
+                searchNumber(nums, flag);
+            } break;
+            case 2 : {
+                int [] params = readFromFileVertex("../notes4.txt");
+                searchNumber(params, flag);
+            } break;
         }
     }
 
-    public static int getInt() {
+    public static int getNum() {
         Scanner sc = new Scanner(System.in);
         while (!sc.hasNextInt()) {
-            System.out.println("Введенно некоректное значение...");
+            System.out.println("Введенно некоректное значение!");
+            System.out.print("Введите значение повторно: ");
             sc.next();
         }
         return sc.nextInt();
@@ -146,8 +240,8 @@ public class App {
         System.out.print("Задача №1  - 1 \nЗадача №2  - 2 \nЗадача №3  - 3 \nЗадача №4  - 4 \nдля выхода нажмите 0 \n");
         boolean run = true;
         while(run) {
-        System.out.print("Введите номер задания: ");
-        int choice = getInt();
+            System.out.print("Введите номер задания: ");
+            int choice = getNum();
             switch (choice) {
                 case 1: {
                     System.out.println("Первое задание.");
@@ -177,7 +271,6 @@ public class App {
             }
         }
     }
-
 
     public static void main(String[] args) {
         tasks();
