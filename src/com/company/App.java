@@ -19,16 +19,16 @@ public class App {
         return triangle;
     }
 
-    public static int[] readFromFileVertex(String path) {
+    public static int[] readFromFile(String path) {
         try {
             File file = new File(path);
-            Scanner scanner = new Scanner(file);
             if(!file.exists()) {
                 file.createNewFile();
                 PrintWriter printWriter = new PrintWriter(file);
                 printWriter.println("3 4 5");
                 printWriter.close();
             }
+            Scanner scanner = new Scanner(file);
             String string = "";
             while (scanner.hasNextLine()) {
                 string = scanner.nextLine();
@@ -61,7 +61,7 @@ public class App {
                 triangle.area();
             } break;
             case 2 : {
-                int [] params = readFromFileVertex("../notes1.txt");
+                int [] params = readFromFile("../notes1.txt");
                 Triangle triangle = new Triangle(params[0],params[1],params[2]);
                 triangle.out();
                 triangle.area();
@@ -140,7 +140,7 @@ public class App {
                 numberDayOfMonth(month, year);
             } break;
             case 2 : {
-                int [] params = readFromFileVertex("../notes2.txt");
+                int [] params = readFromFile("../notes2.txt");
                 numberDayOfMonth(params[0], params[1]);
             } break;
         }
@@ -168,7 +168,7 @@ public class App {
                 sportsMen.getSum();
             } break;
             case 2 : {
-                int [] params = readFromFileVertex("../notes3.txt");
+                int [] params = readFromFile("../notes3.txt");
                 SportsMen sportsMen = new SportsMen(params[0], params[1], params[2]);
                 sportsMen.getSum();
             } break;
@@ -220,7 +220,7 @@ public class App {
                 searchNumber(nums, flag);
             } break;
             case 2 : {
-                int [] params = readFromFileVertex("../notes4.txt");
+                int [] params = readFromFile("../notes4.txt");
                 searchNumber(params, flag);
             } break;
         }

@@ -21,18 +21,6 @@ class Triangle {
             && side3 + side1 > side2;
     }
 
-    Triangle() {
-        //стороны
-        this.side1 = side1;
-        this.side2 = side2;
-        this.side3 = side3;
-
-        valid = side1 + side2 > side3
-                && side2 + side3 > side1
-                && side3 + side1 > side2;
-    }
-
-
     void out() {
         if(this.valid) {
             System.out.println("Это треугольник");
