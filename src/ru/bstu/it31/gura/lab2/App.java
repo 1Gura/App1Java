@@ -1,39 +1,59 @@
 package ru.bstu.it31.gura.lab2;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.*;
 
 import java.io.*;
 import java.util.Date;
 import java.util.Scanner;
 
-/*
- * <p>Лабораторная работа 2</p>
- * @author Гура Илья Сергеевич
- * @name App
- * @version 1.1
- * @date 27.02.2021
- * @see ru.bstu.it31.gura.lab2.App
+/** Выполняет решение следующих задач:.
+ *
+ *<p>
+ *     1) Даны три положительных числа а, Ь, с. Проверить, будут ли
+ *     они сторонами треугольника. Если да, то вычислить площадь
+ *     этого треугольника.
+ * </p>
+ * <p>
+ *     2) Составить программу, которая по заданным году и номеру
+ *     месяца т определяет количество дней в этом месяце.
+ * </p>
+ * <p>
+ *     3) Начав тренировки, спортсмен в первый день пробежал n км.
+ *     Каждый день он увеличивал дневную норму на m% нормы
+ *     предыдущего дня. Какой суммарный путь пробежит спортсмен
+ *     за k дней?
+ * </p>
+ * <p>
+ *     Дана последовательность целых чисел а1,а2,..., аn. Выяснить,
+ *     какое число встречается раньше — положительное или
+ *     отрицательное.
+ * </p>
+ * @version 1.0
+ * @author Гура Илья
  */
 
 public class App {
 
-    static final Logger logger = LogManager.getLogger(App.class);
+    static final Logger Logger = LogManager.getLogger(App.class);
 
+    // метод, который передает набор параметров в конструктор класса Triangle
     public static Triangle inputVertex() {
         int side1,side2,side3;
         System.out.print("Введите 1 сторону: ");
         side1 = getNum();
+        Logger.info("Введенно число:" + side1);
         System.out.print("Введите 2 сторону: ");
         side2 = getNum();
+        Logger.info("Введенно число:" + side2);
         System.out.print("Введите 3 сторону: ");
         side3 = getNum();
+        Logger.info("Введенно число:" + side3);
 
         Triangle triangle = new Triangle(side1,side2,side3);
         return triangle;
     }
 
-    public static int[] readFromFile(String path) {
+    public static int[] readFromFile(String path) { // метод предназначенный для считывания данных из файла
         try {
             File file = new File(path);
             if(!file.exists()) {
@@ -59,10 +79,15 @@ public class App {
         }
     }
 
-
+    // метод предназначенный для считывания данных из файла или с консоли
     static int inputKey() {
         System.out.println("Введите 1, если хотите считывать из консоли, если хотите считывать из файла 2... ");
         int choice = getNum();
+        if(choice == 1) {
+            Logger.info("Был выбран ввод с клавиатуры");
+        } else if(choice == 2) {
+            Logger.info("Был выбран ввод из файла");
+        }
         return choice;
     }
 
@@ -82,66 +107,77 @@ public class App {
             } break;
         }
     }
-
+    // метод предназначенный для ввода даты
     static Date inputDate() {
         Date date = new Date();
         System.out.print("Введите год: ");
         int year = getNum();
+        Logger.info("Был введен год" + year);
         System.out.print("Введите месяц: ");
         int month = getNum();
+        Logger.info("Был введен месяц" + month);
         date.setYear(year);
         date.setMonth(month);
         return date;
     }
 
-    
 
+    // метод предназначенный для вычисления кол-ва дней в месяце
     static void numberDayOfMonth(int month, int year) {
-
+    try {
+        if(year < 0) {
+            String error = "Год не может быть меньше нуля!";
+            Logger.error(error);
+            throw new Exception(error);
+        }
         switch (month) {
             case 1 : {
-                System.out.println("Январь : 31 день");
+                Logger.info("Январь : 31 день");
             } break;
             case 2 : {
                 if(((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)) {
-                    System.out.println("Февраль : 29 день");
+                    Logger.info("Февраль : 29 день");
                 } else {
-                    System.out.println("Февраль : 28 день");
+                    Logger.info("Февраль : 28 день");
                 }
             } break;
             case 3 : {
-                System.out.println("Март : 31 день");
+                Logger.info("Март : 31 день");
             } break;
             case 4 : {
-                System.out.println("Апрель : 30 день");
+                Logger.info("Апрель : 30 день");
             } break;
             case 5 : {
-                System.out.println("Май : 31 день");
+                Logger.info("Май : 31 день");
             } break;
             case 6 : {
-                System.out.println("Июнь : 30 день");
+                Logger.info("Июнь : 30 день");
             } break;
             case 7 : {
-                System.out.println("Июль : 31 день");
+                Logger.info("Июль : 31 день");
             } break;
             case 8 : {
-                System.out.println("Август : 31 день");
+                Logger.info("Август : 31 день");
             } break;
             case 9 : {
-                System.out.println("Сентябрь : 30 день");
+                Logger.info("Сентябрь : 30 день");
             } break;
             case 10 : {
-                System.out.println("Октябрь : 31 день");
+                Logger.info("Октябрь : 31 день");
             } break;
             case 11 : {
-                System.out.println("Ноябрь : 30 день");
+                Logger.info("Ноябрь : 30 день");
             } break;
             case 12 : {
-                System.out.println("Декабрь : 31 день");
+                Logger.info("Декабрь : 31 день");
             } break;
             default:
-                System.out.println("Введите номер месяца от 1 до 12");
+                Logger.warn("Введенный месяц не входит в диапазон от 1 до 12");
         }
+    }catch (Exception ex) {
+        Logger.error(ex);
+    }
+
     }
 
     static void secondTask(){
@@ -161,14 +197,17 @@ public class App {
     }
 
 
-
+    // метод, который передает набор параметров в конструктор класса SportsMen
     static SportsMen inputSportsMen() {
         System.out.print("Введите кол-во километров пробегаемых спортсменом за день:");
         int n  = getNum();
+        Logger.info("Ввели кол-во километров" + n);
         System.out.print("Введите процент увеличения дневной нормы:");
         int m  = getNum();
+        Logger.info("Ввели процент дневной нормы" + m);
         System.out.print("Введите кол-во дней:");
         int k  = getNum();
+        Logger.info("Ввели кол-во дней" + k);
 
         SportsMen sportsMen = new SportsMen(n,m,k);
         return sportsMen;
@@ -189,57 +228,54 @@ public class App {
         }
     }
 
+    // метод для инициализации массива
     static  int[] arrayInitialization (int n) {
         if(n > 0) {
             int nums[] = new int[n];
             for(int i = 0; i<nums.length; i++) {
                 System.out.print("Введите " + i + " элемент: ");
                 nums[i] = getNum();
+                Logger.info("Ввели" + i + "элемент = " + nums[i]);
             }
             return nums;
         } else {
-            System.out.println("Размерность массива не может быть отрицательной!");
+            Logger.warn("Размерность массива не может быть отрицательной!");
             return new int[0];
         }
     }
 
-
-    static void searchNumber(int[] nums, boolean flag) {
+    // метод для поиска первого положительного или отрицательного числа
+    static void searchNumber(int[] nums) {
         if(nums.length > 0) {
             for(int i = 0; i<nums.length - 1; i++) {
-                if(nums[i] < 0 && nums[i+1] > 0) {
+                if(nums[i] < 0) {
                     System.out.println("Первым встречается отрицательное");
-                    flag = true;
                     break;
-                } else if(nums[i] > 0 && nums[i+1] < 0) {
+                } else if(nums[i]  > 0) {
                     System.out.println("Первым встречается положительное");
-                    flag = true;
                     break;
                 }
-            }
-            if (flag == false) {
-                System.out.println("Массив состоит только из положительны или отрицательных чисел.");
             }
         }
     }
 
     static void fourthTask() {
         int choice = inputKey();
-        boolean flag = false;
         switch(choice) {
             case 1 : {
                 System.out.print("Введите размерность массива: ");
                 int n  = getNum();
+                Logger.info("Ввели размерность массива:" + n);
                 int nums[] = arrayInitialization(n);
-                searchNumber(nums, flag);
+                searchNumber(nums);
             } break;
             case 2 : {
                 int [] params = readFromFile("../notes4.txt");
-                searchNumber(params, flag);
+                searchNumber(params);
             } break;
         }
     }
-
+    // метод для ввода числовых значений
     public static int getNum() {
         Scanner sc = new Scanner(System.in);
         while (!sc.hasNextInt()) {
@@ -250,42 +286,57 @@ public class App {
         return sc.nextInt();
     }
 
+
+    /** Функция выбора задачи
+     *
+     * <p>
+     *     Осуществляется выбор номера задачи
+     * </p>
+     */
     static void tasks(){
         System.out.print("Задача №1  - 1 \nЗадача №2  - 2 \nЗадача №3  - 3 \nЗадача №4  - 4 \nдля выхода нажмите 0 \n");
-        boolean run = true;
+        boolean run = true; // логическое значение свидетельствующее о том, что программы исполняется, как только будет принято значение false, программа завершится
         while(run) {
             System.out.print("Введите номер задания: ");
             int choice = getNum();
             switch (choice) {
                 case 1: {
-                    logger.info("Было выбрано первое задание");
+                    Logger.info("Было выбрано первое задание");
                     firstTask();
                 } break;
 
                 case 2: {
-                    System.out.println("Второе задание.");
+                    Logger.info("Было выбрано второе задание");
                     secondTask();
                 } break;
 
                 case 3: {
-                    System.out.println("Третье задание.");
+                    Logger.info("Было выбрано третье задание");
                     thirdTask();
                 } break;
                 case 4: {
-                    System.out.println("Четвертое задание.");
+                    Logger.info("Было выбрано четвёртое задание");
                     fourthTask();
                 } break;
                 default: {
-                    System.out.println("Введенно неверное значение!");
+                    Logger.info("Было выбрано четвёртое задание");
                 } break;
 
                 case 0: {
+                    Logger.info("Программа была завершена нажатем на кнопку выхода");
                     run = false;
                 }
             }
         }
     }
 
+    /** Главная функция.
+     *
+     * <p>
+     *     Внутри функции main осуществляется запуск функции tasks
+     * </p>
+     * @param args аргументы командной строки
+     */
     public static void main(String[] args) {
         tasks();
     }

@@ -1,6 +1,15 @@
 package ru.bstu.it31.gura.lab2;
-
+import org.apache.logging.log4j.*;
 public class SportsMen {
+    static final Logger Logger = LogManager.getLogger(SportsMen.class);
+    /**Класс спортсмен.
+     *
+     * <p>
+     *     Класс описывает свойства спортсмена и методы для обработки этих свойств.
+     *     Такие как: Подсчёт суммарной дистанции.
+     * </p>
+     */
+
     private int n; //километры
     private int m; //проценты дневной нормы
     private int k; //кол-во дней
@@ -19,8 +28,7 @@ public class SportsMen {
             sum += temp;
         }
         sum = this.n + sum;
-        System.out.print("Суммарный путь (цикл for): ");
-        System.out.println(sum);
+        Logger.info("Суммарный путь (цикл for): " + sum);
 
         temp = this.n;
         sum = 0;
@@ -31,8 +39,7 @@ public class SportsMen {
             count--;
         }
         sum = this.n + sum;
-        System.out.print("Суммарный путь (цикл while): ");
-        System.out.println(sum);
+        Logger.info("Суммарный путь (цикл while): " + sum);
     }
 
 }

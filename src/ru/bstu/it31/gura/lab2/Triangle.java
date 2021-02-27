@@ -1,14 +1,29 @@
 package ru.bstu.it31.gura.lab2;
 
+import org.apache.logging.log4j.*;
+
 import java.awt.*;
 import java.util.Scanner;
+
 class Triangle {
+    static final Logger Logger = LogManager.getLogger(Triangle.class);
     //стороны
     int side1;
     int side2;
     int side3;
 
     boolean valid;
+
+    /**Проверка существования треугольника и вычисление его площади.
+     *
+     * <p>
+     *     Класс описывает свойства треугольника и методы для обработки этих свойств.
+     *     Такие как: вычисление площади, проверка треугольника на свущетвование.
+     * </p>
+     * @param  side1 1 сторона треуголника
+     * @param  side2 2 сторона треуголника
+     * @param  side3 3 сторона треуголника
+     */
 
     Triangle(int side1, int side2, int side3) {
         //стороны
@@ -23,15 +38,12 @@ class Triangle {
 
     void out() {
         if(this.valid) {
-            System.out.println("Это треугольник");
-            System.out.print("Первая сторона:");
-            System.out.println(side1);
-            System.out.print("Вторая сторона:");
-            System.out.println(side2);
-            System.out.print("Третья сторона:");
-            System.out.println(side3);
+            Logger.info("Это треугольник");
+            Logger.info("Первая сторона:" + side1);
+            Logger.info("Вторая сторона:" + side2);
+            Logger.info("Третья сторона:" + side3);
         } else {
-            System.out.println("Это не треугольник");
+            Logger.info("Это не треугольник");
         }
     }
 
@@ -39,11 +51,10 @@ class Triangle {
         if(this.valid) {
             int p = (side1 + side2 + side3)/2;
             double S = Math.sqrt(p * (p-side1) * (p - side2) * (p - side3));
-            System.out.println("Площадь треуголника");
-            System.out.println(S);
+            Logger.info("Площадь треуголника:" + S);
         }
         else {
-            System.out.println("Площадь посчитать невозможно!");
+            Logger.info("Площадь посчитать невозможно!");
         }
     }
 }
