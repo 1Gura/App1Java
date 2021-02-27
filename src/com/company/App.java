@@ -4,6 +4,15 @@ import java.io.*;
 import java.util.Date;
 import java.util.Scanner;
 
+/*
+ * <p>Лабораторная работа 2</p>
+ * @author Гура Илья Сергеевич
+ * @name App
+ * @version 1.1
+ * @date 27.02.2021
+ * @see ru.bstu.it31.gura.lab2.App
+ */
+
 public class App {
 
     public static Triangle inputVertex() {
