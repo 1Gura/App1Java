@@ -1,4 +1,7 @@
-package com.company;
+package ru.bstu.it31.gura.lab2;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.util.Date;
@@ -14,6 +17,8 @@ import java.util.Scanner;
  */
 
 public class App {
+
+    static final Logger logger = LogManager.getLogger(App.class);
 
     public static Triangle inputVertex() {
         int side1,side2,side3;
@@ -253,7 +258,7 @@ public class App {
             int choice = getNum();
             switch (choice) {
                 case 1: {
-                    System.out.println("Первое задание.");
+                    logger.info("Было выбрано первое задание");
                     firstTask();
                 } break;
 

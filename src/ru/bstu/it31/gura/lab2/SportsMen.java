@@ -1,4 +1,4 @@
-package com.company;
+package ru.bstu.it31.gura.lab2;
 
 public class SportsMen {
     private int n; //километры

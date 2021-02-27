@@ -1,4 +1,4 @@
-package com.company;
+package ru.bstu.it31.gura.lab2;
 
 import java.awt.*;
 import java.util.Scanner;
