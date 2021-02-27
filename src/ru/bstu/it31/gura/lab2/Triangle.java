@@ -50,6 +50,7 @@ class Triangle {
     void area() {
         if(this.valid) {
             int p = (side1 + side2 + side3)/2;
+            Logger.debug("Полупериметр треугольника:" + p);
             double S = Math.sqrt(p * (p-side1) * (p - side2) * (p - side3));
             Logger.info("Площадь треуголника:" + S);
         }

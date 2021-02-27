@@ -38,19 +38,37 @@ public class App {
 
     // метод, который передает набор параметров в конструктор класса Triangle
     public static Triangle inputVertex() {
-        int side1,side2,side3;
-        System.out.print("Введите 1 сторону: ");
-        side1 = getNum();
-        Logger.info("Введенно число:" + side1);
-        System.out.print("Введите 2 сторону: ");
-        side2 = getNum();
-        Logger.info("Введенно число:" + side2);
-        System.out.print("Введите 3 сторону: ");
-        side3 = getNum();
-        Logger.info("Введенно число:" + side3);
+        try {
+            int side1,side2,side3;
+            System.out.print("Введите 1 сторону: ");
+            side1 = getNum();
+            String error = "Сторона не может быть меньше или равна 0.";
+            if(side1 <= 0) {
+                Logger.error(error);
+                throw new Exception(error);
+            }
+            Logger.info("Введенно число:" + side1);
+            System.out.print("Введите 2 сторону: ");
+            side2 = getNum();
+            if(side2 <= 0) {
+                Logger.error(error);
+                throw new Exception(error);
+            }
+            Logger.info("Введенно число:" + side2);
+            System.out.print("Введите 3 сторону: ");
+            side3 = getNum();
+            if(side3 <= 0) {
+                Logger.error(error);
+                throw new Exception(error);
+            }
+            Logger.info("Введенно число:" + side3);
+            Triangle triangle = new Triangle(side1,side2,side3);
+            return triangle;
+        } catch (Exception e) {
+            Logger.warn("Были выставленны значения по умолчанию");
+            return new Triangle(3,4,5);
+        }
 
-        Triangle triangle = new Triangle(side1,side2,side3);
-        return triangle;
     }
 
     public static int[] readFromFile(String path) { // метод предназначенный для считывания данных из файла
@@ -109,24 +127,39 @@ public class App {
     }
     // метод предназначенный для ввода даты
     static Date inputDate() {
-        Date date = new Date();
-        System.out.print("Введите год: ");
-        int year = getNum();
-        Logger.info("Был введен год" + year);
-        System.out.print("Введите месяц: ");
-        int month = getNum();
-        Logger.info("Был введен месяц" + month);
-        date.setYear(year);
-        date.setMonth(month);
-        return date;
+        try {
+            String error = "Год и месяц должны быть больше 0";
+            Date date = new Date();
+            System.out.print("Введите год: ");
+            int year = getNum();
+            if(year < 0) {
+                Logger.error(error);
+                throw new Exception(error);
+            }
+            Logger.info("Был введен год: " + year);
+            System.out.print("Введите месяц: ");
+            int month = getNum();
+            if(month < 0) {
+                Logger.error(error);
+                throw new Exception(error);
+            }
+            Logger.info("Был введен месяц" + month);
+            date.setYear(year);
+            date.setMonth(month);
+            return date;
+
+        } catch (Exception e) {
+            Logger.warn("Были выставленны значения по умолчанию");
+            return new Date();
+        }
     }
 
 
     // метод предназначенный для вычисления кол-ва дней в месяце
     static void numberDayOfMonth(int month, int year) {
     try {
-        if(year < 0) {
-            String error = "Год не может быть меньше нуля!";
+        if(year < 0 || month<0) {
+            String error = "Год не может быть меньше нуля! \n Месяц не может быть меньше 0";
             Logger.error(error);
             throw new Exception(error);
         }
@@ -172,7 +205,7 @@ public class App {
                 Logger.info("Декабрь : 31 день");
             } break;
             default:
-                Logger.warn("Введенный месяц не входит в диапазон от 1 до 12");
+                Logger.error("Введенный месяц не входит в диапазон от 1 до 12");
         }
     }catch (Exception ex) {
         Logger.error(ex);
@@ -199,18 +232,36 @@ public class App {
 
     // метод, который передает набор параметров в конструктор класса SportsMen
     static SportsMen inputSportsMen() {
-        System.out.print("Введите кол-во километров пробегаемых спортсменом за день:");
-        int n  = getNum();
-        Logger.info("Ввели кол-во километров" + n);
-        System.out.print("Введите процент увеличения дневной нормы:");
-        int m  = getNum();
-        Logger.info("Ввели процент дневной нормы" + m);
-        System.out.print("Введите кол-во дней:");
-        int k  = getNum();
-        Logger.info("Ввели кол-во дней" + k);
+        try {
+            String error = "Значение не может быть меньше или равно 0";
+            System.out.print("Введите кол-во километров пробегаемых спортсменом за день:");
+            int n  = getNum();
+            if(n <= 0) {
+                Logger.error(error);
+                throw new Exception(error);
+            }
+            Logger.info("Ввели кол-во километров" + n);
+            System.out.print("Введите процент увеличения дневной нормы:");
+            int m  = getNum();
+            if(m <= 0) {
+                Logger.error(error);
+                throw new Exception(error);
+            }
+            Logger.info("Ввели процент дневной нормы" + m);
+            System.out.print("Введите кол-во дней:");
+            int k  = getNum();
+            if(k <= 0) {
+                Logger.error(error);
+                throw new Exception(error);
+            }
+            Logger.info("Ввели кол-во дней" + k);
 
-        SportsMen sportsMen = new SportsMen(n,m,k);
-        return sportsMen;
+            SportsMen sportsMen = new SportsMen(n,m,k);
+            return sportsMen;
+        } catch (Exception e) {
+            Logger.warn("Были выставленны значения по умолчанию");
+            return new SportsMen(3,4,5);
+        }
     }
 
     static void thirdTask() {
